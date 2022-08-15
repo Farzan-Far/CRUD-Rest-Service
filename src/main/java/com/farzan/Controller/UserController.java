@@ -70,5 +70,19 @@ public class UserController
             throw new UserNotFound("Invalid User Id");
         }
     }
+    @DeleteMapping("/{id}")
+    public ResponseEntity<User> DeleteUser(@PathVariable("id") Long id)
+    {
+        Optional<User> user = repository.findById(id);
+
+        if (user.isPresent())
+        {
+            repository.deleteById(id);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } else
+        {
+            throw new UserNotFound("Invalid User id");
+        }
+    }
 
 }
