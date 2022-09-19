@@ -49,7 +49,7 @@ public class UserController
             throw new InternalServerError(e.getMessage());
         }
 }
-   // Get User by ID
+   // Update user by id
     @PutMapping("/{id}")
     public ResponseEntity<User> UpdateUser(@PathVariable("id") Long id,
                                            @RequestBody User user)
@@ -70,6 +70,7 @@ public class UserController
             throw new UserNotFound("Invalid User Id");
         }
     }
+    // Delete User by id
     @DeleteMapping("/{id}")
     public ResponseEntity<User> DeleteUser(@PathVariable("id") Long id)
     {
@@ -82,6 +83,20 @@ public class UserController
         } else
         {
             throw new UserNotFound("Invalid User id");
+        }
+    }
+    // get User by id
+    @GetMapping("/{id}")
+    public ResponseEntity<User> getUserById(@PathVariable("id") Long id)
+    {
+        Optional<User> user2 = repository.findById(id);
+
+        if (user2.isPresent())
+        {
+            return new ResponseEntity<>(user2.get(), HttpStatus.OK);
+        }
+        else {
+            throw new UserNotFound("invalid user id");
         }
     }
 
